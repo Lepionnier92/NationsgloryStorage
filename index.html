@@ -1,92 +1,85 @@
 <!DOCTYPE html>
 <html lang="fr" data-bs-theme="dark">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NationsgloryStorage</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="https://cdn.nationsglory.fr/default/assets/css/main.css?5569">
-    <link rel="stylesheet" href="https://cdn.nationsglory.fr/default/assets/css/chat.css">
-    <link rel="stylesheet" href="https://unpkg.com/@sjmc11/tourguidejs/dist/css/tour.min.css">
-    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.7.95/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="https://kit.fontawesome.com/be478ad185.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-    <link rel="stylesheet" href="../src/css/mystyles.css">
-    <link rel="stylesheet" href="../src/css/styles.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900;amp;display=swap;"
-        rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PalaStorage</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://cdn.nationsglory.fr/default/assets/css/main.css?5569">
+  <link rel="stylesheet" href="https://cdn.nationsglory.fr/default/assets/css/chat.css">
+  <link rel="stylesheet" href="https://unpkg.com/@sjmc11/tourguidejs/dist/css/tour.min.css">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.7.95/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://kit.fontawesome.com/be478ad185.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <link rel="stylesheet" href="../src/css/mystyles.css">
+  <link rel="stylesheet" href="../src/css/styles.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
 </head>
-
 <body>
+  <div class="conteneur-images">
+<img class="tile-background lazy image-fond" width="350" height="197" src="https://static.nationsglory.fr/article-miniature-lootboxes.png" alt="Nouvelles Lootboxes" style="">
+<img src="https://static.nationsglory.fr/N3633NN664.png" alt="Image par dessus" class="image-dessus">
+</div>
 
-    <div class="conteneur-images">
-        <img class="tile-background lazy image-fond" width="350" height="197"
-            src="https://static.nationsglory.fr/article-miniature-lootboxes.png" alt="Nouvelles Lootboxes">
-        <img src="https://static.nationsglory.fr/N3633NN664.png" alt="Image par dessus" class="image-dessus">
-    </div>
+<div id="playerCount"></div>
 
-    <div id="playerCount"></div>
+<script>
+const options = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer NGAPI_2QcqcEVbl%B%C(AxitjS$FLzMN8PtR)K714229c08db526fcf6db83f6d8e72e92'
+  }
+};
 
-    <script>
-        const options = {
-            method: 'GET',
-            headers: {
-                accept: 'application/json',
-                Authorization: 'Bearer NGAPI_2QcqcEVbl%B%C(AxitjS$FLzMN8PtR)K714229c08db526fcf6db83f6d8e72e92'
-            }
-        };
+function fetchData() {
+  fetch('https://publicapi.nationsglory.fr/playercount', options)
+    .then(response => response.json())
+    .then(response => {
+      if (response && Object.keys(response).length > 0) {
+        updatePlayerCount(response);
+      }
+    })
+    .catch(err => console.error(err));
+}
 
-        function fetchData() {
-            fetch('https://publicapi.nationsglory.fr/playercount/', options)
-                .then(response => response.json())
-                .then(response => {
-                    if (response && Object.keys(response).length > 0) {
-                        updatePlayerCount(response);
-                    }
-                })
-                .catch(err => console.error(err));
-        }
+function updatePlayerCount(response) {
+  const playerCountDiv = document.getElementById('playerCount');
+  const tempDiv = document.createElement('div'); // Crée un élément temporaire pour les nouvelles données
+  tempDiv.innerHTML = formatResponse(response);
+  playerCountDiv.innerHTML = tempDiv.innerHTML; // Remplace le contenu de playerCountDiv par les nouvelles données
+}
 
-        function updatePlayerCount(response) {
-            const playerCountDiv = document.getElementById('playerCount');
-            const tempDiv = document.createElement('div'); // Crée un élément temporaire pour les nouvelles données
-            tempDiv.innerHTML = formatResponse(response);
-            playerCountDiv.innerHTML = tempDiv.innerHTML; // Remplace le contenu de playerCountDiv par les nouvelles données
-        }
+function formatResponse(response) {
+  let html = '';
+  for (const key in response) {
+    if (response.hasOwnProperty(key) && key !== 'last_update') {
+      const server = response[key];
+      html += `
+        <div class="server">
+          <h3>Server: ${server.name}</h3>
+          <p>State: ${server.state}</p>
+          <p>Players: ${server.players} / ${server.maxplayers}</p>
+          <p>Flag: ${server.flag}</p>
+        </div>`;
+    }
+  }
+  return html;
+}
 
-        function formatResponse(response) {
-            let html = '';
-            for (const key in response) {
-                if (response.hasOwnProperty(key) && key !== 'last_update') {
-                    const server = response[key];
-                    html += `
-                        <div class="server">
-                        <h3>Server: ${server.name}</h3>
-                        <p>State: ${server.state}</p>
-                        <p>Players: ${server.players} / ${server.maxplayers}</p>
-                        <p>Flag: ${server.flag}</p>
-                        </div>`;
-                }
-            }
-            return html;
-        }
+// Fetch data initially
+fetchData();
+</script>
 
-        // Fetch data initially
-        fetchData();
-    </script>
-
-    <style>
-        .server {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-    </style>
+<style>
+.server {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+</style>
 </body>
-
 </html>
