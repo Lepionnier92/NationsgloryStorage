@@ -63,6 +63,7 @@
 
                 const options = {
                     method: 'GET',
+                    mode: 'no-cors',
                     headers: {
                         accept: 'application/json',
                         Authorization: `Bearer NGAPI_2QcqcEVbl%B%C(AxitjS$FLzMN8PtR)K714229c08db526fcf6db83f6d8e72e92`
@@ -70,14 +71,13 @@
                 };
 
                 fetch(`https://publicapi.nationsglory.fr/oauth/checkToken?access_token=${accessToken}&client_secret=${clientSecret}`, options)
-                    .then(response => response.json())
                     .then(response => {
+                        // En mode no-cors, vous ne pourrez pas lire la réponse directement.
+                        // Cependant, vous pouvez afficher un message d'information.
+                        console.log('Requête envoyée en mode no-cors.');
                         const userInfoDiv = document.getElementById('userInfo');
                         userInfoDiv.innerHTML = `
-                            <p>Username: ${response.username}</p>
-                            <p>IP: ${response.ip}</p>
-                            <p>Granted At: ${response.granted_at}</p>
-                            <p>Revoked At: ${response.revoked_at}</p>
+                            <p>Requête envoyée, mais les détails ne peuvent pas être affichés en mode no-cors.</p>
                         `;
                     })
                     .catch(err => console.error(err));
