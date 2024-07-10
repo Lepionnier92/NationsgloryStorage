@@ -1,85 +1,88 @@
 <!DOCTYPE html>
 <html lang="fr" data-bs-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PalaStorage</title>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="https://cdn.nationsglory.fr/default/assets/css/main.css?5569">
-  <link rel="stylesheet" href="https://cdn.nationsglory.fr/default/assets/css/chat.css">
-  <link rel="stylesheet" href="https://unpkg.com/@sjmc11/tourguidejs/dist/css/tour.min.css">
-  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.7.95/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="https://kit.fontawesome.com/be478ad185.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-  <link rel="stylesheet" href="../src/css/mystyles.css">
-  <link rel="stylesheet" href="../src/css/styles.css">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NationsgloryStorage</title>
+    <link href="/css/styles.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900;amp;display=swap;" rel="stylesheet">
 </head>
 <body>
-  <div class="conteneur-images">
-<img class="tile-background lazy image-fond" width="350" height="197" src="https://static.nationsglory.fr/article-miniature-lootboxes.png" alt="Nouvelles Lootboxes" style="">
-<img src="https://static.nationsglory.fr/N3633NN664.png" alt="Image par dessus" class="image-dessus">
-</div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
 
-<div id="playerCount"></div>
+    <a href="https://publicapi.nationsglory.fr/oauth/auth?client_id=CLIENTID_cZbq7IK6jJdMci7xDty7cwxG8zvk3rpN5d066e89b4316ad09f66704e5edec6d5&redirect_uri=https://lepionnier92.github.io/NationsgloryStorage/">Connect with NationsGlory</a>
 
-<script>
-const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: 'Bearer NGAPI_2QcqcEVbl%B%C(AxitjS$FLzMN8PtR)K714229c08db526fcf6db83f6d8e72e92'
-  }
-};
+    <p id="accessToken"></p>
+    <div id="userInfo"></div>
 
-function fetchData() {
-  fetch('https://publicapi.nationsglory.fr/playercount', options)
-    .then(response => response.json())
-    .then(response => {
-      if (response && Object.keys(response).length > 0) {
-        updatePlayerCount(response);
-      }
-    })
-    .catch(err => console.error(err));
-}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const accessToken = urlParams.get('access_token');
+            const clientSecret = 'SECRET_8X0lfEhQU5%29PAm%29zXI%5EeHXjOASNCOHj%4063075fc09bfecdebe8a06e4eae88ac6a';
 
-function updatePlayerCount(response) {
-  const playerCountDiv = document.getElementById('playerCount');
-  const tempDiv = document.createElement('div'); // Crée un élément temporaire pour les nouvelles données
-  tempDiv.innerHTML = formatResponse(response);
-  playerCountDiv.innerHTML = tempDiv.innerHTML; // Remplace le contenu de playerCountDiv par les nouvelles données
-}
+            if (accessToken) {
+                document.getElementById('accessToken').textContent = `Access Token: ${accessToken}`;
 
-function formatResponse(response) {
-  let html = '';
-  for (const key in response) {
-    if (response.hasOwnProperty(key) && key !== 'last_update') {
-      const server = response[key];
-      html += `
-        <div class="server">
-          <h3>Server: ${server.name}</h3>
-          <p>State: ${server.state}</p>
-          <p>Players: ${server.players} / ${server.maxplayers}</p>
-          <p>Flag: ${server.flag}</p>
-        </div>`;
-    }
-  }
-  return html;
-}
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        accept: 'application/json',
+                        Authorization: `Bearer NGAPI_2QcqcEVbl%B%C(AxitjS$FLzMN8PtR)K714229c08db526fcf6db83f6d8e72e92`
+                    }
+                };
 
-// Fetch data initially
-fetchData();
-</script>
-
-<style>
-.server {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-}
-</style>
+                fetch(`https://publicapi.nationsglory.fr/oauth/checkToken?access_token=${accessToken}&client_secret=${clientSecret}`, options)
+                    .then(response => response.json())
+                    .then(response => {
+                        const userInfoDiv = document.getElementById('userInfo');
+                        userInfoDiv.innerHTML = `
+                            <p>Username: ${response.username}</p>
+                            <p>IP: ${response.ip}</p>
+                            <p>Granted At: ${response.granted_at}</p>
+                            <p>Revoked At: ${response.revoked_at}</p>
+                        `;
+                    })
+                    .catch(err => console.error(err));
+            }
+        });
+    </script>
 </body>
 </html>
