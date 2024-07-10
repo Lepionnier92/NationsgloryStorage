@@ -7,7 +7,9 @@
     <link href="/css/styles.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900;amp;display=swap;" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap;" rel="stylesheet">
+    <!-- Inclure Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -63,24 +65,31 @@
 
                 const options = {
                     method: 'GET',
-                    mode: 'no-cors',
+                    url: 'https://publicapi.nationsglory.fr/oauth/checkToken',
+                    params: {
+                        access_token: accessToken,
+                        client_secret: clientSecret
+                    },
                     headers: {
                         accept: 'application/json',
-                        Authorization: `Bearer NGAPI_2QcqcEVbl%B%C(AxitjS$FLzMN8PtR)K714229c08db526fcf6db83f6d8e72e92`
+                        Authorization: 'Bearer NGAPI_2QcqcEVbl%B%C(AxitjS$FLzMN8PtR)K714229c08db526fcf6db83f6d8e72e92'
                     }
                 };
 
-                fetch(`https://publicapi.nationsglory.fr/oauth/checkToken?access_token=${accessToken}&client_secret=${clientSecret}`, options)
-                    .then(response => {
-                        // En mode no-cors, vous ne pourrez pas lire la réponse directement.
-                        // Cependant, vous pouvez afficher un message d'information.
-                        console.log('Requête envoyée en mode no-cors.');
+                axios
+                    .request(options)
+                    .then(function (response) {
                         const userInfoDiv = document.getElementById('userInfo');
                         userInfoDiv.innerHTML = `
-                            <p>Requête envoyée, mais les détails ne peuvent pas être affichés en mode no-cors.</p>
+                            <p>Username: ${response.data.username}</p>
+                            <p>IP: ${response.data.ip}</p>
+                            <p>Granted At: ${response.data.granted_at}</p>
+                            <p>Revoked At: ${response.data.revoked_at}</p>
                         `;
                     })
-                    .catch(err => console.error(err));
+                    .catch(function (error) {
+                        console.error(error);
+                    });
             }
         });
     </script>
