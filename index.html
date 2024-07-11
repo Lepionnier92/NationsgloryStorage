@@ -8,8 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap;" rel="stylesheet">
-    <!-- Inclure Axios -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -54,44 +52,6 @@
     <p id="accessToken"></p>
     <div id="userInfo"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const accessToken = urlParams.get('access_token');
-            const clientSecret = 'SECRET_8X0lfEhQU5%29PAm%29zXI%5EeHXjOASNCOHj%4063075fc09bfecdebe8a06e4eae88ac6a';
-
-            if (accessToken) {
-                document.getElementById('accessToken').textContent = `Access Token: ${accessToken}`;
-
-                const options = {
-                    method: 'GET',
-                    url: 'https://publicapi.nationsglory.fr/oauth/checkToken',
-                    params: {
-                        access_token: accessToken,
-                        client_secret: clientSecret
-                    },
-                    headers: {
-                        accept: 'application/json',
-                        Authorization: 'Bearer NGAPI_2QcqcEVbl%B%C(AxitjS$FLzMN8PtR)K714229c08db526fcf6db83f6d8e72e92'
-                    }
-                };
-
-                axios
-                    .request(options)
-                    .then(function (response) {
-                        const userInfoDiv = document.getElementById('userInfo');
-                        userInfoDiv.innerHTML = `
-                            <p>Username: ${response.data.username}</p>
-                            <p>IP: ${response.data.ip}</p>
-                            <p>Granted At: ${response.data.granted_at}</p>
-                            <p>Revoked At: ${response.data.revoked_at}</p>
-                        `;
-                    })
-                    .catch(function (error) {
-                        console.error(error);
-                    });
-            }
-        });
-    </script>
+    <script src="bundle.js"></script>
 </body>
 </html>
