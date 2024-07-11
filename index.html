@@ -7,7 +7,7 @@
     <link href="/css/styles.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap;" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900;amp;display=swap;" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -52,6 +52,38 @@
     <p id="accessToken"></p>
     <div id="userInfo"></div>
 
-    <script src="bundle.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const accessToken = urlParams.get('access_token');
+            const clientSecret = 'SECRET_8X0lfEhQU5%29PAm%29zXI%5EeHXjOASNCOHj%4063075fc09bfecdebe8a06e4eae88ac6a';
+
+            if (accessToken) {
+                document.getElementById('accessToken').textContent = `Access Token: ${accessToken}`;
+
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        accept: 'application/json',
+                        Authorization: `Bearer NGAPI_2QcqcEVbl%B%C(AxitjS$FLzMN8PtR)K714229c08db526fcf6db83f6d8e72e92`
+                    }
+                };
+
+                fetch(`https://publicapi.nationsglory.fr/oauth/checkToken?access_token=${accessToken}&client_secret=${clientSecret}`, options)
+                    .then(res => res.json())
+                    .then(res => console.log(res))
+                    .then(json => {
+                        const userInfoDiv = document.getElementById('userInfo');
+                        userInfoDiv.innerHTML = `
+                            <p>Username: ${json.username}</p>
+                            <p>IP: ${json.ip}</p>
+                            <p>Granted At: ${json.granted_at}</p>
+                            <p>Revoked At: ${json.revoked_at}</p>
+                        `;
+                    })
+                    .catch(err => console.error('error:' + err));
+            }
+        });
+    </script>
 </body>
 </html>
