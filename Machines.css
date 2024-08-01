@@ -1,0 +1,41 @@
+.Panneaux-solaires {
+    width: 138px;
+    height: 94px;
+}
+.Panneaux-solaire-amélioré {
+    width: 34.5px;
+    height: 20.5px;
+
+}
+.Générateur-à-charbon {
+
+}
+.Groupe-électrogène {
+
+}
+.Repair-machine {
+
+}
+.list-Panneaux-solaires {
+    width: 69px;
+    height: 47px;
+    margin-right: 10px;
+}
+.list-Panneaux-solaire-amélioré {
+
+}  
+.list-Générateur-à-charbon {
+    width: 24.75px;
+    height: 63px;
+    margin-right: 35px;
+    margin-left: 20px;
+
+} 
+.list-Groupe-électrogène {
+    width: 100px;
+    height: 100px;
+}
+.upgrade-2 {
+    width: 50px;
+    height: 50px;
+}
