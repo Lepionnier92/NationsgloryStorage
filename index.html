@@ -6,6 +6,9 @@
     <title>Machine Management</title>
     <link rel="stylesheet" href="Machines.css">
     <style>
+        .kwmin {
+            padding-right: 25px;
+        }
         ::-webkit-scrollbar {
             width: 12px;
         }
@@ -86,9 +89,9 @@
             font-size: 16px;
             padding: 5px;
             border-radius: 5px;
+            width: 100%;
             border: 1px solid #cccccc00;
             background-color: #262646;
-            width: 100%;
             box-sizing: border-box;
             margin-bottom: 10px;
             color: #fff;
@@ -137,7 +140,7 @@
         <div class="left-panel">
             <h2>Ajouter une Machine</h2>
             <select id="machineSelect"></select>
-            <button id="addMachineButton">Ajouter Machine</button>
+            <button class="test" id="addMachineButton">Ajouter une machine</button>
             <h2>Machines Ajoutées</h2>
             <div id="machineListContainer"></div>
             <p id="totalKwMin">Production Totale: 0 kW/min, Consommation Totale: 0 kW/min</p>
@@ -154,7 +157,13 @@
                 { name: "Panneaux solaire amélioré", rate: 4, type: 'production' },
                 { name: "Générateur à charbon", rate: 10, type: 'production' },
                 { name: "Groupe électrogène", rate: 65, type: 'production' },
-                { name: "Repair machine", rate: 15, type: 'consumption' }
+                { name: "Machine de réparation", rate: 15, type: 'consumption' },
+                { name: "Réparateur industriel", rate: 100, type: 'consuption'},
+                { name: "Ecotron", rate: 100, type: 'consuption'},
+                { name: "Imprimante", rate: 100, type: 'consuption'},
+                { name: "Compresseur électrique", rate: 100, type: 'consuption'},
+                { name: "Machine à potions", rate: 100, type: 'consuption'},
+                { name: "Concasseur", rate: 100, type: 'consuption'}
             ];
 
             const upgrades = [
@@ -202,7 +211,7 @@
                     machineCard.className = 'machine-card';
 
                     const machineImage = document.createElement('img');
-                    machineImage.src = `/images/${machine.name.replace(/\s+/g, '-')}.png`;
+                    machineImage.src = `/images/${machine.name.replace(/\s+/g, '-')}.webp`;
                     machineImage.alt = machine.name;
                     machineImage.className = `list-${machine.name.replace(/\s+/g, '-')}`;
 
@@ -214,7 +223,8 @@
                     const machineDetails = document.createElement('div');
                     machineDetails.className = 'machine-details';
                     const currentRate = calculateMachineRate(machine);
-                    machineDetails.textContent = `${machine.durability}% | ${currentRate.toFixed(2)} kW/min`;
+                    machineDetails.className = 'kwmin'
+                    machineDetails.textContent = `${machine.durability}% | ${currentRate.toFixed(2)}kW/min`;
 
                     const upgradeIconsContainer = document.createElement('div');
                     upgradeIconsContainer.className = 'upgrade-icons';
@@ -222,7 +232,7 @@
                         const upgrade = upgrades.find(u => u.name === upgradeName);
                         if (upgrade) {
                             const upgradeIcon = document.createElement('img');
-                            upgradeIcon.src = `/images/upgrade-2-${upgradeName.replace(/\s+/g, '-')}.png`;
+                            upgradeIcon.src = `/images/upgrade-2-${upgradeName.replace(/\s+/g, '-')}.webp`;
                             upgradeIcon.alt = upgradeName;
                             upgradeIcon.className = 'upgrade-2';
                             upgradeIconsContainer.appendChild(upgradeIcon);
@@ -280,7 +290,7 @@
                 headerContainer.style.marginBottom = '20px';
 
                 const machineImage = document.createElement('img');
-                machineImage.src = `/images/${machine.name.replace(/\s+/g, '-')}.png`;
+                machineImage.src = `/images/${machine.name.replace(/\s+/g, '-')}.webp`;
                 machineImage.alt = machine.name;
                 machineImage.className = machine.name.replace(/\s+/g, '-');
                 headerContainer.appendChild(machineImage);
@@ -317,7 +327,7 @@
                     const upgradeDiv = document.createElement('div');
 
                     const upgradeImage = document.createElement('img');
-                    upgradeImage.src = `/images/${upgrade.name.replace(/\s+/g, '-')}.png`;
+                    upgradeImage.src = `/images/${upgrade.name.replace(/\s+/g, '-')}.webp`;
                     upgradeImage.alt = upgrade.name;
                     upgradeImage.className = 'upgrade-2-icon';
 
@@ -385,3 +395,4 @@
     </script>
 </body>
 </html>
+
