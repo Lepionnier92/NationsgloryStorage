@@ -42,3 +42,11 @@
     width: 25px;
     height: 25px;
 }
+.durabiliter {
+    font-weight: 600;
+    color: #fff;
+    background-color: #262646;
+    border: solid 1px #cccccc00;
+    border-radius: 5px;
+    text-align: start;
+}

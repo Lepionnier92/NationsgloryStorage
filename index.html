@@ -42,6 +42,9 @@
             overflow-y: auto;
             position: relative;
         }
+        .right-panel{
+            width: 20%;
+        }
         .machine-card {
             padding: 10px;
             margin: 10px 0;
@@ -105,6 +108,8 @@
         .machine-instance img {
             width: 100px;
             height: 100px;
+            margin-right: -50px;
+            padding-right: -50px;
             margin-bottom: 10px;
         }
         .upgrades-container {
@@ -113,7 +118,7 @@
             justify-content: center;
         }
         .upgrades-container div {
-            margin: 5px;
+            margin-right: -5px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -127,11 +132,13 @@
             color: #fff;
             padding: 10px;
             margin-top: 10px;
+            border-radius: 5px;
+
         }
         .container {
             display: flex;
             justify-content: space-between;
-            margin: 20px;
+            margin: 10px;
         }
     </style>
 </head>
@@ -142,7 +149,7 @@
             <select id="machineSelect"></select>
             <button class="test" id="addMachineButton">Ajouter une machine</button>
             <h2>Machines Ajoutées</h2>
-            <div id="machineListContainer"></div>
+            <div id="machineListContainer" style="height: 200px; overflow: auto; border-radius: 5px;"></div>
             <p id="totalKwMin">Production Totale: 0 kW/min, Consommation Totale: 0 kW/min</p>
         </div>
         <div class="right-panel">
@@ -314,11 +321,16 @@
                 durabilityInput.min = 0;
                 durabilityInput.max = 100;
                 durabilityInput.style.margin = '10px 0';
+                durabilityInput.className = 'durabiliter'
                 durabilityInput.addEventListener('input', (e) => {
                     machine.durability = Math.max(0, parseInt(e.target.value));
                     updateMachineList();
                 });
                 detailsDiv.appendChild(durabilityInput);
+
+                const pourcentageLabel = document.createElement('label');
+                pourcentageLabel.textContent = '%';
+                detailsDiv.appendChild(pourcentageLabel);
                
                 const upgradesContainer = document.createElement('div');
                 upgradesContainer.className = 'upgrades-container';
