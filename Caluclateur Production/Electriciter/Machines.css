@@ -1,21 +1,30 @@
 .Panneaux-solaires {
-    width: 138px;
-    height: 94px;
+    width: 190px;
 }
 .Panneaux-solaire-amélioré {
-    width: 69px;
-    height: 41px;
+    width: 220px;
 
 }
 .Générateur-à-charbon {
+    width: 80px;
 
 }
 .Groupe-électrogène {
 
 }
-.Repair-machine {
+.Machine-de-réparation {
+    width: 100px;
 
 }
+.Réparateur-industriel {
+    width: 120px;
+}
+.Ecotron {
+    width: 180px;
+}
+
+
+
 .list-Panneaux-solaires {
     width: 69px;
     height: 47px;
@@ -37,6 +46,18 @@
     width: 69px;
     height: 77px;
     margin-right: 10px;
+}
+.list-Machine-de-réparation {
+ width: 38px;
+ margin-right: 30px;
+ margin-left: 10px;
+}
+.list-Réparateur-industriel {
+    width: 60px;
+    margin-right: 20px;
+}
+.list-Ecotron {
+    width: 80px;
 }
 .upgrade-2 {
     width: 25px;
